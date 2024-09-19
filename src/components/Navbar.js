@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 
 function Navbar() {
-  const [navbarOpen, setNavbarOpen] = useState(false);
+  const [navbarOpen, setNavbarOpen] = useState(false); // State to store the toggle status of the navbar
 
+  // Function to handle the toggle of the navbar
   const handleToggle = () => {
     setNavbarOpen(!navbarOpen);
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark">
+    <nav className="navbar navbar-expand-lg fixed-top navbar-dark">
       <div className="container">
         <a className="navbar-brand" href="#home">
           MyApp
