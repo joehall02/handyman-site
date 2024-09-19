@@ -43,12 +43,29 @@
 
 /* Changes background image of home page */
 #home{
-    background-image: url('./assets/home_background.jpg');    
+    background-image: url('./assets/home_background.jpg');  
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;  
 }
 
 /* Changes size of h1 on home page */
 #home .container h1 {
     font-size: 4rem;
+}
+
+/* Services */
+#services {
+    background-color: #005F41;    
+}
+
+.custom-icon {
+    font-size: 6rem;    
+}
+
+.custom-line-height {
+    line-height: 2.5;
 }
 
 /* Button */
