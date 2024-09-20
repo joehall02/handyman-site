@@ -1,7 +1,7 @@
 function Services() {
   return (
     <section id="services">
-      <div className="container d-flex flex-wrap align-items-center justify-content-center min-vh-100">
+      <div className="container d-flex flex-wrap align-items-center justify-content-center min-vh-100 py-5">
         <div className="row w-100">
           <div className="col-md-4 d-flex align-items-center">
             <div className="row">

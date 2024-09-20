@@ -29,6 +29,11 @@ function Navbar() {
               </a>
             </li>
             <li className="nav-item">
+              <a className="nav-link" href="#gallery" onClick={handleNavLinkClick}>
+                Gallery
+              </a>
+            </li>
+            <li className="nav-item">
               <a className="nav-link" href="#about" onClick={handleNavLinkClick}>
                 About
               </a>

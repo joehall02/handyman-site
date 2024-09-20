@@ -68,6 +68,15 @@
     line-height: 2.5;
 }
 
+/* Gallery */
+#gallery {
+    background-color: #323232;
+}
+
+#imageCarousel {
+    box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.5);
+}
+
 /* Button */
 
 /* Custom dark button with green outline and box shadow */
