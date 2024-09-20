@@ -64,10 +64,6 @@
     font-size: 6rem;    
 }
 
-.custom-line-height {
-    line-height: 2.5;
-}
-
 /* Gallery */
 #gallery {
     background-color: #323232;
@@ -75,6 +71,11 @@
 
 #imageCarousel {
     box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.5);
+}
+
+/* About */
+.about-description {
+    background-color: #005F41;
 }
 
 /* Button */
@@ -103,4 +104,9 @@
     background-color: #005F41 !important;
     border-color: #323232 !important;
     color: #fff !important;
+}
+
+/* Other */
+.custom-line-height {
+    line-height: 2.5;
 }

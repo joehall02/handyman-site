@@ -7,7 +7,7 @@ function Gallery() {
   return (
     <section id="gallery">
       <div className="container d-flex flex-column align-items-center min-vh-100">
-        <h2 className="text-white fw-bold my-5 py-5">PROJECT GALLERY</h2>
+        <h1 className="text-white fw-bold my-5 py-5">PROJECT GALLERY</h1>
 
         {/* <div className="row w-100 mb-5">
           <div className="col-lg-4">

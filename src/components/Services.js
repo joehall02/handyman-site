@@ -21,7 +21,7 @@ function Services() {
           </div>
 
           <div className="col-md-8">
-            <h2 className="text-white fw-bold">SERVICES</h2>
+            <h1 className="text-white fw-bold">SERVICES</h1>
             <p className="text-white custom-line-height">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore saepe eligendi sunt rem. Tenetur similique ut suscipit autem, praesentium minus dolore iste veniam, impedit ipsum,
               velit explicabo sapiente quam esse. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ipsa, beatae. Perferendis est magnam, neque incidunt ex esse nulla nesciunt cupiditate
