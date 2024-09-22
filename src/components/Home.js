@@ -13,7 +13,7 @@ function Home() {
           We hit the nail on the head when <br />
           it comes to quality service
         </h3>
-        <a className="btn custom-button" href="#services">
+        <a className="btn px-4 boxy-button" href="#services">
           LEARN MORE
         </a>
       </div>

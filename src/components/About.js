@@ -5,11 +5,13 @@ function About() {
   return (
     <section id="about">
       <div className="d-flex vh-100">
+        {/* About image */}
         <div className="col-md-6 d-flex align-items-stretch d-none d-lg-block position-relative">
           {/* Dark overlay, zIndex used to position homepage content above the overlay */}
           <div className="position-absolute top-0 start-0 w-100 h-100 bg-dark bg-opacity-50"></div>
           <img src={aboutBackground} alt="About" className="img-fluid w-100 h-100" />
         </div>
+        {/* About text */}
         <div className="col-12 col-lg-6 d-flex align-items-center justify-content-center about-description">
           <div className="col-10">
             <h1 className="fw-bold text-white pb-5">ABOUT US</h1>
