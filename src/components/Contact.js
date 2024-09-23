@@ -1,4 +1,45 @@
+import React, { useState } from "react";
+import emailjs from "@emailjs/browser";
+
 function Contact() {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    message: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const serviceID = process.env.REACT_APP_EMAILJS_SERVICE_ID;
+    const templateID = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
+    const userID = process.env.REACT_APP_EMAILJS_USER_ID;
+
+    emailjs.send(serviceID, templateID, formData, userID).then(
+      (result) => {
+        alert("Message sent successfully!");
+      },
+      (error) => {
+        alert("Message failed to send!");
+      }
+    );
+
+    setFormData({
+      name: "",
+      email: "",
+      phone: "",
+      message: "",
+    });
+  };
+
   return (
     <section id="contact">
       <div className="d-flex flex-column-reverse flex-lg-row">
@@ -27,30 +68,39 @@ function Contact() {
         <div className="col-12 col-lg-6 d-flex align-items-center justify-content-center vh-100 contact-form">
           <div className="col-10 col-lg-8">
             <h1 className="fw-bold text-white text-center pb-5">GET IN TOUCH</h1>
-            <form className="d-flex flex-column justify-content-center">
+            <form className="d-flex flex-column justify-content-center" onSubmit={handleSubmit}>
               <div className="mb-3">
                 <label htmlFor="name" className="form-label text-white">
                   Name
                 </label>
-                <input type="text" className="form-control" id="name" placeholder="John Doe" required />
+                <input type="text" className="form-control" id="name" name="name" placeholder="John Doe" value={formData.name} onChange={handleChange} required />
               </div>
               <div className="mb-3">
                 <label htmlFor="email" className="form-label text-white">
                   Email address
                 </label>
-                <input type="email" className="form-control" id="email" placeholder="email@email.co.uk" required />
+                <input type="email" className="form-control" id="email" name="email" placeholder="email@email.co.uk" value={formData.email} onChange={handleChange} required />
               </div>
               <div className="mb-3">
                 <label htmlFor="phone" className="form-label text-white">
                   Phone (optional)
                 </label>
-                <input type="tel" className="form-control" id="phone" placeholder="+44*********" />
+                <input type="tel" className="form-control" id="phone" name="phone" placeholder="+44*********" value={formData.phone} onChange={handleChange} />
               </div>
               <div className="mb-3">
                 <label htmlFor="message" className="form-label text-white">
                   Describe the job
                 </label>
-                <textarea className="form-control" id="message" rows="3" placeholder="Home repair, painting, gardening, etc..." required></textarea>
+                <textarea
+                  className="form-control"
+                  id="message"
+                  rows="3"
+                  name="message"
+                  placeholder="Home repair, painting, gardening, etc..."
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                ></textarea>
               </div>
               <button type="submit" className="btn mt-4 px-5 boxy-button w-auto mx-auto">
                 SUBMIT
