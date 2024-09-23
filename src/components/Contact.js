@@ -29,6 +29,12 @@ function Contact() {
             <h1 className="fw-bold text-white text-center pb-5">GET IN TOUCH</h1>
             <form className="d-flex flex-column justify-content-center">
               <div className="mb-3">
+                <label htmlFor="name" className="form-label text-white">
+                  Name
+                </label>
+                <input type="text" className="form-control" id="name" placeholder="John Doe" required />
+              </div>
+              <div className="mb-3">
                 <label htmlFor="email" className="form-label text-white">
                   Email address
                 </label>

@@ -39,6 +39,7 @@
     font-size: 1.5rem;
 }
 
+
 /* Home */
 
 /* Changes background image of home page */
@@ -56,37 +57,49 @@
 }
 
 /* Services */
+
+/* Changes background colour of services section */
 #services {
     background-color: #005F41;    
 }
 
+/* Font size for icons on services */
 .custom-icon {
     font-size: 6rem;    
 }
 
 /* Gallery */
+
+/* Changes background colour of gallery section */
 #gallery {
     background-color: #323232;
 }
 
+/* Box shadow for image gallery carousel */
 #imageCarousel {
     box-shadow: 6px 6px 0px 0px rgba(0, 0, 0, 0.5);
 }
 
 /* About */
+
+/* Changes background colour of about section */
 .about-description {
     background-color: #005F41;
 }
 
 /* Contact */
+
+/* Changes background colour of contact section */
 .contact-info {
     background-color: #005F41;
 }
 
+/* Changes background colour of contact form */
 .contact-form {
     background-color: #323232;
 }
 
+/* Custom styling for form inputs and text area */
 #contact form input,
 #contact form textarea {
     background-color: #323232;
@@ -96,8 +109,16 @@
     border: 3px solid #005F41;
     border-radius: 0px;
     resize: none;
+    box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.75);
 }
 
+/* Removes box shadow when input is selected */
+#contact form input:focus,
+#contact form textarea:focus {    
+    box-shadow: none;
+}
+
+/* Changes colour of placeholder text */
 #contact form input::placeholder,
 #contact form textarea::placeholder {
     color: #8f9798;
@@ -105,42 +126,15 @@
 
 /* Button */
 
-/* Custom dark button with green outline and box shadow */
-/* #home .boxy-button,
-#contact .boxy-button {
-    background-color: #323232;
-    color: #fff;    
-    border-width: 5px;
-    border-color: #005F41;
-    border-radius: 0px;    
-    box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.75);
-    font-size: 1.4rem;
-} */
 
-/* Changes colour of button when hovering over it */
-/* #home .boxy-button:hover,
-#contact .boxy-button:hover {
-    background-color: #005F41;
-    border-color: #323232;
-    color: #fff;
-} */
-
-/* Removes box shadow when button is active */
-/* #home .boxy-button:active,
-#contact .boxy-button:active {
-    box-shadow: none;
-    background-color: #005F41 !important;
-    border-color: #323232 !important;
-    color: #fff !important;
-} */
-
+/* Custom styling for boxy buttons */
 #home .boxy-button,
 #contact .boxy-button {
     background-color: #323232;
     color: #fff;   
     border: none; 
     border-radius: 0px;    
-    box-shadow: inset 0 0 0 5px #005F41, 3px 3px 0px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: inset 0 0 0 3px #005F41, 3px 3px 0px 0px rgba(0, 0, 0, 0.75);
     font-size: 1.4rem;
     box-sizing: border-box;
 }
@@ -156,10 +150,11 @@
 #home .boxy-button:active,
 #contact .boxy-button:active {
     box-shadow: inset 0 0 0 5px #005F41, 0px 0px 0px 0px rgba(0, 0, 0, 0);
-    color: #fff !important;
 }
 
 /* Other */
+
+/* Custom line height spacing */
 .custom-line-height {
     line-height: 2.5;
 }

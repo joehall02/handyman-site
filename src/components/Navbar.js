@@ -16,7 +16,7 @@ function Navbar() {
     <nav className="navbar navbar-expand-lg fixed-top navbar-dark">
       <div className="container">
         <a className="navbar-brand" href="#home" onClick={handleNavLinkClick}>
-          MyApp
+          Handyman-site
         </a>
         <button className="navbar-toggler" type="button" onClick={handleToggle} aria-controls="navbarNav" aria-expanded={navbarOpen ? "true" : "false"} aria-label="Toggle navigation">
           {navbarOpen ? <i class="bi bi-x-lg toggle-icon" /> : <i class="bi bi-list toggle-icon" />}
