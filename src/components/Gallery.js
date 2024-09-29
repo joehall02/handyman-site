@@ -11,9 +11,17 @@ class GalleryItem {
   }
 }
 
+// LocalStorage keys for caching
+const CACHE_KEY = "galleryItems";
+const CACHE_EXPIRATION_KEY = "galleryItemsExpiration";
+
+// Cache expiration time in milliseconds (1 hour)
+const CACHE_EXPIRATION_TIME = 60 * 60 * 1000;
+
 function Gallery() {
-  // State to store gallery items
-  const [galleryItems, setGalleryItems] = useState([]);
+  const [galleryItems, setGalleryItems] = useState([]); // State to store gallery items
+  const [isLoading, setIsLoading] = useState(true); // State to store loading status
+  const [error, setError] = useState(null); // State to store error status
 
   useEffect(() => {
     // Create a new Contentful client
@@ -27,25 +35,50 @@ function Gallery() {
     // Fetch gallery items from Contentful
     async function fetchGalleryItems() {
       try {
-        const response = await client.getEntries(); // Fetch all entries
+        // Check if gallery items are cached and still valid
+        const cachedGalleryItems = localStorage.getItem(CACHE_KEY);
+        const expirationTime = localStorage.getItem(CACHE_EXPIRATION_KEY);
 
-        // Create a map of asset IDs to URLs
-        const assetMap = response.includes.Asset.reduce((acc, asset) => {
-          acc[asset.sys.id] = asset.fields.file.url;
-          return acc;
-        }, {});
+        if (cachedGalleryItems && expirationTime && Date.now() < expirationTime) {
+          console.log("Using cached gallery items");
+          setGalleryItems(JSON.parse(cachedGalleryItems));
+          setIsLoading(false);
+          return;
+        }
 
-        // Map response items to GalleryItem objects
-        const items = response.items.map((item) => {
-          const { title, description, image } = item.fields;
-          const imageUrl = assetMap[image.sys.id];
-          return new GalleryItem(title, description, imageUrl);
-        });
+        // Fetch all entries
+        console.log("Fetching gallery items from Contentful");
+        const response = await client.getEntries();
 
-        // Update gallery items state
-        setGalleryItems(items);
+        // Check if the response has the necessary data
+        if (response && response.items) {
+          // Create a map of asset IDs to URLs
+          const assetMap = response.includes.Asset.reduce((acc, asset) => {
+            acc[asset.sys.id] = asset.fields.file.url;
+            return acc;
+          }, {});
+
+          // Map response items to GalleryItem objects
+          const items = response.items.map((item) => {
+            const { title, description, image } = item.fields;
+            const imageUrl = assetMap[image.sys.id];
+            return new GalleryItem(title, description, imageUrl);
+          });
+
+          // Cache gallery items
+          localStorage.setItem(CACHE_KEY, JSON.stringify(items));
+          localStorage.setItem(CACHE_EXPIRATION_KEY, Date.now() + CACHE_EXPIRATION_TIME);
+
+          // Update gallery items state
+          setGalleryItems(items);
+        } else {
+          throw new Error("No data found"); // Handle case where no data is returned
+        }
+        setIsLoading(false); // Set loading status to false
       } catch (error) {
         console.error("Error fetching gallery items:", error);
+        setError("Unable to load gallery items at this time."); // Set error status
+        setIsLoading(false); // Set loading status to false
       }
     }
 
@@ -58,9 +91,13 @@ function Gallery() {
         <h1 className="text-white fw-bold my-5 py-5">PROJECT GALLERY</h1>
 
         {/* If gallery items aren't returned, show loading icon. If they are returned, display them in an image carousel */}
-        {galleryItems.length === 0 ? (
+        {isLoading ? (
           <div class="spinner-border text-success" role="status">
             <span class="visually-hidden">Loading...</span>
+          </div>
+        ) : error ? (
+          <div class="alert alert-danger" role="alert">
+            {error}
           </div>
         ) : (
           <div id="imageCarousel" class="carousel slide col-12 col-md-8 mb-5" data-bs-ride="carousel">
@@ -81,7 +118,7 @@ function Gallery() {
               {/* Create a carousel item for each gallery item */}
               {galleryItems.map((item, index) => (
                 <div className={`carousel-item ${index === 0 ? "active" : ""}`}>
-                  {/* <img src={`https:${item.imageUrl}`} className="d-block w-100 img-fluid" alt="..." /> */}
+                  <img src={`https:${item.imageUrl}`} className="d-block w-100 img-fluid" alt="..." />
                   <div className="carousel-caption">
                     <h5 className="d-none d-md-block">{item.title}</h5>
                     <h5 className="d-block d-md-none fs-6">{item.title}</h5>
@@ -90,17 +127,16 @@ function Gallery() {
                 </div>
               ))}
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="visually-hidden">Next</span>
+            </button>
           </div>
         )}
-
-        <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
-          <span class="carousel-control-next-icon" aria-hidden="true"></span>
-          <span class="visually-hidden">Next</span>
-        </button>
       </div>
     </section>
   );
