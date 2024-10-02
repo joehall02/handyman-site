@@ -1,15 +1,5 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { createClient } from "contentful";
-
-// Class to represent a gallery item
-class GalleryItem {
-  constructor(title, description, imageUrl) {
-    this.title = title;
-    this.description = description;
-    this.imageUrl = imageUrl;
-  }
-}
 
 // LocalStorage keys for caching
 const CACHE_KEY = "galleryItems";
@@ -24,15 +14,7 @@ function Gallery() {
   const [error, setError] = useState(null); // State to store error status
 
   useEffect(() => {
-    // Create a new Contentful client
-    const client = createClient({
-      space: process.env.REACT_APP_CONTENTFUL_SPACE_ID,
-      environment: process.env.REACT_APP_CONTENTFUL_ENVIRONMENT_ID,
-      accessToken: process.env.REACT_APP_CONTENTFUL_ACCESS_TOKEN,
-      host: "cdn.contentful.com", // Use the CDN to only retrieve published content
-    });
-
-    // Fetch gallery items from Contentful
+    // Fetch gallery items from backend
     async function fetchGalleryItems() {
       try {
         // Check if gallery items are cached and still valid
@@ -46,34 +28,21 @@ function Gallery() {
           return;
         }
 
-        // Fetch all entries
+        // Fetch entries from backend
         console.log("Fetching gallery items from Contentful");
-        const response = await client.getEntries();
-
-        // Check if the response has the necessary data
-        if (response && response.items) {
-          // Create a map of asset IDs to URLs
-          const assetMap = response.includes.Asset.reduce((acc, asset) => {
-            acc[asset.sys.id] = asset.fields.file.url;
-            return acc;
-          }, {});
-
-          // Map response items to GalleryItem objects
-          const items = response.items.map((item) => {
-            const { title, description, image } = item.fields;
-            const imageUrl = assetMap[image.sys.id];
-            return new GalleryItem(title, description, imageUrl);
-          });
-
-          // Cache gallery items
-          localStorage.setItem(CACHE_KEY, JSON.stringify(items));
-          localStorage.setItem(CACHE_EXPIRATION_KEY, Date.now() + CACHE_EXPIRATION_TIME);
-
-          // Update gallery items state
-          setGalleryItems(items);
-        } else {
-          throw new Error("No data found"); // Handle case where no data is returned
+        const response = await fetch("/api/gallery");
+        if (!response.ok) {
+          throw new Error("Failed to fetch gallery items");
         }
+        const items = await response.json();
+
+        // Cache gallery items
+        localStorage.setItem(CACHE_KEY, JSON.stringify(items));
+        localStorage.setItem(CACHE_EXPIRATION_KEY, Date.now() + CACHE_EXPIRATION_TIME);
+
+        // Update gallery items state
+        setGalleryItems(items);
+
         setIsLoading(false); // Set loading status to false
       } catch (error) {
         console.error("Error fetching gallery items:", error);
