@@ -1,0 +1,11 @@
+services:
+  app: 
+    build:
+      context: . # use the current directory
+      dockerfile: Dockerfile # use the Dockerfile in the current directory
+    ports:
+      - "5050:5050" # map host port 5050 to container port 5050
+    env_file:
+      - ./backend/.env # use the environment variables in the .env file
+    volumes:
+      - .:/app # mount the current directory to the /app directory in the container

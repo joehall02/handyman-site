@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const { createClient } = require("contentful");
 const emailjs = require("@emailjs/nodejs");
+const path = require("path");
 
 dotenv.config({ path: ".env" });
 
@@ -11,6 +12,11 @@ const PORT = process.env.SERVER_PORT || 5050;
 
 app.use(cors()); // Enable CORS
 app.use(express.json()); // Parse JSON bodies
+
+// Serve static files from the React app in production
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "/../build")));
+}
 
 // Class to represent a gallery item
 class GalleryItem {
@@ -91,6 +97,13 @@ app.post("/api/contact", async (req, res) => {
     res.status(500).json({ error: "Email failed to send. Try again later." });
   }
 });
+
+// Serve the React app in production
+if (process.env.NODE_ENV === "production") {
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname + "/../build/index.html"));
+  });
+}
 
 const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
