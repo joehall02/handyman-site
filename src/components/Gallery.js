@@ -22,14 +22,12 @@ function Gallery() {
         const expirationTime = localStorage.getItem(CACHE_EXPIRATION_KEY);
 
         if (cachedGalleryItems && expirationTime && Date.now() < expirationTime) {
-          console.log("Using cached gallery items");
           setGalleryItems(JSON.parse(cachedGalleryItems));
           setIsLoading(false);
           return;
         }
 
         // Fetch entries from backend
-        console.log("Fetching gallery items from Contentful");
         const response = await fetch("/api/gallery");
         if (!response.ok) {
           throw new Error("Failed to fetch gallery items");
@@ -45,7 +43,6 @@ function Gallery() {
 
         setIsLoading(false); // Set loading status to false
       } catch (error) {
-        console.error("Error fetching gallery items:", error);
         setError("Unable to load gallery items at this time."); // Set error status
         setIsLoading(false); // Set loading status to false
       }
@@ -61,19 +58,20 @@ function Gallery() {
 
         {/* If gallery items aren't returned, show loading icon. If they are returned, display them in an image carousel */}
         {isLoading ? (
-          <div class="spinner-border text-success" role="status">
-            <span class="visually-hidden">Loading...</span>
+          <div className="spinner-border text-success" role="status">
+            <span className="visually-hidden">Loading...</span>
           </div>
         ) : error ? (
-          <div class="alert alert-danger" role="alert">
+          <div className="alert alert-danger" role="alert">
             {error}
           </div>
         ) : (
-          <div id="imageCarousel" class="carousel slide col-12 col-md-8 mb-5" data-bs-ride="carousel">
+          <div id="imageCarousel" className="carousel slide col-12 col-md-8 mb-5" data-bs-ride="carousel">
             <div className="carousel-indicators">
               {/* Create a carousel indicator for each gallery item */}
               {galleryItems.map((item, index) => (
                 <button
+                  key={index}
                   type="button"
                   data-bs-target="#imageCarousel"
                   data-bs-slide-to={index}
@@ -86,7 +84,7 @@ function Gallery() {
             <div className="carousel-inner">
               {/* Create a carousel item for each gallery item */}
               {galleryItems.map((item, index) => (
-                <div className={`carousel-item ${index === 0 ? "active" : ""}`}>
+                <div key={index} className={`carousel-item ${index === 0 ? "active" : ""}`}>
                   <img src={`https:${item.imageUrl}`} className="d-block w-100 img-fluid" alt="..." />
                   <div className="carousel-caption">
                     <h5 className="d-none d-md-block">{item.title}</h5>
@@ -96,13 +94,13 @@ function Gallery() {
                 </div>
               ))}
             </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
+            <button className="carousel-control-prev" type="button" data-bs-target="#imageCarousel" data-bs-slide="prev">
+              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span className="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
+            <button className="carousel-control-next" type="button" data-bs-target="#imageCarousel" data-bs-slide="next">
+              <span className="carousel-control-next-icon" aria-hidden="true"></span>
+              <span className="visually-hidden">Next</span>
             </button>
           </div>
         )}

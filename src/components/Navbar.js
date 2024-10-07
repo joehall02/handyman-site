@@ -19,7 +19,7 @@ function Navbar() {
           Handyman-site
         </a>
         <button className="navbar-toggler" type="button" onClick={handleToggle} aria-controls="navbarNav" aria-expanded={navbarOpen ? "true" : "false"} aria-label="Toggle navigation">
-          {navbarOpen ? <i class="bi bi-x-lg toggle-icon" /> : <i class="bi bi-list toggle-icon" />}
+          {navbarOpen ? <i className="bi bi-x-lg toggle-icon" /> : <i className="bi bi-list toggle-icon" />}
         </button>
         <div className={`collapse navbar-collapse ${navbarOpen ? "show" : ""}`} id="navbarNav">
           <ul className="navbar-nav d-flex justify-content-end align-items-end ms-auto">
