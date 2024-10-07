@@ -35,7 +35,7 @@ app.get("/api/gallery", async (req, res) => {
     const response = await client.getEntries();
 
     // Check if the response has the necessary data
-    if (response && response.items) {
+    if (response && response.items.length > 0) {
       // Create a map of asset IDs to URLs
       // Ensure response.includes.Asset exists
       const assetMap =
@@ -63,7 +63,7 @@ app.get("/api/gallery", async (req, res) => {
   }
 });
 
-app.post("/api/contact", (req, res) => {
+app.post("/api/contact", async (req, res) => {
   const { name, email, phone, message } = req.body;
 
   // Send email using emailjs
@@ -79,23 +79,22 @@ app.post("/api/contact", (req, res) => {
     message,
   };
 
-  emailjs
-    .send(serviceID, templateID, templateParams, {
+  try {
+    await emailjs.send(serviceID, templateID, templateParams, {
       publicKey: publicID,
       privateKey: privateID,
-    })
-    .then(
-      (result) => {
-        console.log("Email sent successfully!");
-        res.status(200).json({ message: "Email sent successfully!" });
-      },
-      (error) => {
-        console.error("Email failed to send:", error);
-        res.status(500).json({ error: "Email failed to send. Try again later." });
-      }
-    );
+    });
+    console.log("Email sent successfully!");
+    res.status(200).json({ message: "Email sent successfully!" });
+  } catch (error) {
+    console.error("Email failed to send:", error);
+    res.status(500).json({ error: "Email failed to send. Try again later." });
+  }
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+// Export the app for testing
+module.exports = { app, server };
