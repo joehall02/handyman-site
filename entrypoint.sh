@@ -9,6 +9,6 @@ if [ "$NODE_ENV" = "production" ]; then
   node backend/server.js
 else
   echo "Running in development mode..."
-  # Start the development server (both backend and frontend, if required)
+  # Start the development server
   npm start
 fi

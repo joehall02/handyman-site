@@ -25,8 +25,8 @@ WORKDIR /app
 # Copy the rest of the files to the working directory
 COPY . .
 
-# Expose the port the app runs on
-EXPOSE 5050
+# Expose the port the app runs on. Development (3000) and Production (5050)
+EXPOSE 3000 5050
 
 # Add an entrypoint script to manage behavior based on the NODE_ENV
 COPY entrypoint.sh /entrypoint.sh

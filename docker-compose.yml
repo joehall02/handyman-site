@@ -4,7 +4,8 @@ services:
       context: . # use the current directory
       dockerfile: Dockerfile # use the Dockerfile in the current directory
     ports:
-      - "5050:5050" # map host port 5050 to container port 5050
+      - "3000:3000" # For development
+      - "5050:5050" # For production
     env_file:
       - ./backend/.env # use the environment variables in the .env file
     volumes:
