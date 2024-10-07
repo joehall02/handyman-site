@@ -66,7 +66,7 @@ function Gallery() {
             {error}
           </div>
         ) : (
-          <div id="imageCarousel" className="carousel slide col-12 col-md-8 mb-5" data-bs-ride="carousel">
+          <div id="imageCarousel" className="carousel slide col-12 col-lg-8 mb-5" data-bs-ride="carousel">
             <div className="carousel-indicators">
               {/* Create a carousel indicator for each gallery item */}
               {galleryItems.map((item, index) => (
