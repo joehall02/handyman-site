@@ -3,10 +3,11 @@ services:
     build:
       context: . # use the current directory
       dockerfile: Dockerfile # use the Dockerfile in the current directory
-    ports:
-      - "3000:3000" # For development
+    ports:      
       - "5050:5050" # For production
     env_file:
       - ./backend/.env # use the environment variables in the .env file
+    environment:
+      - NODE_ENV=production # set the NODE_ENV environment variable to production
     volumes:
       - .:/app # mount the current directory to the /app directory in the container

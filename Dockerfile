@@ -25,13 +25,11 @@ WORKDIR /app
 # Copy the rest of the files to the working directory
 COPY . .
 
-# Expose the port the app runs on. Development (3000) and Production (5050)
-EXPOSE 3000 5050
+# Expose the port the app runs on (5050)
+EXPOSE 5050
 
-# Add an entrypoint script to manage behavior based on the NODE_ENV
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+# Build the frontend React app
+RUN npm run build
 
-# Set the default command to run the entrypoint script
-ENTRYPOINT ["/entrypoint.sh"]
-
+# Start the Express server and make sure it serves on port 5050
+CMD ["node", "backend/server.js"]
